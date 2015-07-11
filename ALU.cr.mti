@@ -1,0 +1,10 @@
+C:/Users/Administrator/CPU/ALU_tb.v {2 {vlog -work work -vopt {C:\Users\Administrator\CPU\ALU_tb.v}
+Model Technology ModelSim SE vlog 10.1a Compiler 2012.02 Feb 22 2012
+** Warning: C:\Users\Administrator\CPU\ALU_tb.v(1): (vlog-2283) Extra semicolon in $unit (global) scope.
+
+-- Compiling module ALU_tb
+
+Top level modules:
+	ALU_tb
+
+} {} {}}

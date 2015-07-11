@@ -3,7 +3,8 @@ module ALU(
 	input [31:0]B,
 	input [5:0]ALUFun,
 	input Sign,
-	output reg [31:0]Z);
+	output reg [31:0]Z,
+	output reg Zero,V,N);
 
 wire [31:0]Z_00;
 wire [31:0]Z_01;
@@ -19,7 +20,7 @@ ALU_F11 ALU_F11(A,B,Sign,ALUFun[3:0],Z_11);
 always @(*)
 begin
 	case (ALUFun[5:4])
-	2'b00:Z = Z_00;
+	2'b0:begin Z = Z_00;Zero = Zero_temp;V = V_temp;N = N_temp;end
 	2'b01:Z = Z_01;
 	2'b10:Z = Z_10;
 	2'b11:Z = Z_11;

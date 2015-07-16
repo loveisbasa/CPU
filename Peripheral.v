@@ -1,6 +1,6 @@
 `timescale 1ns/1ps
 
-module Peripheral (reset,clk,rd,wr,addr,wdata,rdata,led,switch,digi,irqout);
+module Peripheral (reset,clk,rd,wr,addr,wdata,rdata,led,switch,digi,irqout);//including Datamem
 input reset,clk;
 input rd,wr;
 input [31:0] addr;
@@ -19,6 +19,9 @@ reg [31:0] TH,TL;
 reg [2:0] TCON;
 assign irqout = TCON[2];
 
+parameter RAM_SIZE = 256;
+reg [31:0] RAMDATA [RAM_SIZE-1:0];
+
 always@(*) begin
 	if(rd) begin
 		case(addr)
@@ -28,7 +31,8 @@ always@(*) begin
 			32'h4000000C: rdata <= {24'b0,led};			
 			32'h40000010: rdata <= {24'b0,switch};
 			32'h40000014: rdata <= {20'b0,digi};
-			default: rdata <= 32'b0;
+			32'h40000020: rdata <= {27'b0,UART_CON};
+			default: rdata <= (rd && (addr < RAM_SIZE))?RAMDATA[addr[31:2]]:32'b0;
 		endcase
 	end
 	else
@@ -36,6 +40,9 @@ always@(*) begin
 end
 
 always@(negedge reset or posedge clk) begin
+   if(rd && (addr == 32'h40000020))
+	   UART_CON[3:2] = 2'b00;
+		
 	if(~reset) begin
 		TH <= 32'b0;
 		TL <= 32'b0;
@@ -57,10 +64,11 @@ always@(negedge reset or posedge clk) begin
 				32'h40000008: TCON <= wdata[2:0];		
 				32'h4000000C: led <= wdata[7:0];			
 				32'h40000014: digi <= wdata[11:0];
-				default: ;
+				default: if(wr && (addr < RAM_SIZE)) RAMDATA[addr[31:2]]<=wdata;
 			endcase
 		end
 	end
 end
 endmodule
+
 

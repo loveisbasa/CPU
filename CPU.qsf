@@ -45,9 +45,11 @@ set_global_assignment -name LAST_QUARTUS_VERSION "13.0 SP1"
 set_global_assignment -name USE_GENERATED_PHYSICAL_CONSTRAINTS OFF -section_id eda_blast_fpga
 set_global_assignment -name MIN_CORE_JUNCTION_TEMP 0
 set_global_assignment -name MAX_CORE_JUNCTION_TEMP 85
+set_global_assignment -name VERILOG_FILE UART.v
+set_global_assignment -name VERILOG_FILE CPU_single.v
+set_global_assignment -name VERILOG_FILE ALU_tb.v
 set_global_assignment -name VERILOG_FILE rom.v
 set_global_assignment -name VERILOG_FILE regfile.v
 set_global_assignment -name VERILOG_FILE Peripheral.v
 set_global_assignment -name VERILOG_FILE digitube_scan.v
-set_global_assignment -name VERILOG_FILE DataMem.v
 set_global_assignment -name VERILOG_FILE ALU.v
